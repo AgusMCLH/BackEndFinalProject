@@ -5,7 +5,7 @@ console.log(images);
 if (images !== undefined) {
   let src = '';
   if (window.location.href.split('/')[4] === 'profile') {
-    src = 'avatar-placeholder.png';
+    src = '/img/placeholder/avatar-placeholder.png';
   } else {
     src = '/img/placeholder/placeholder-image.webp';
   }
