@@ -47,7 +47,7 @@ export default class UserRouter extends CustomRouter {
         error = true;
       }
       req.session.messages = [];
-      res.render('signup', { title: 'SignUp', error, errorText });
+      res.render('signup', { title: 'signup', error, errorText });
     });
 
     this.post(
