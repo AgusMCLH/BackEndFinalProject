@@ -34,7 +34,7 @@ export default class UserRouter extends CustomRouter {
         error = true;
       }
       req.session.messages = [];
-      res.render('signin', { title: 'SignIn', error, errorText });
+      res.render('signIn', { title: 'SignIn', error, errorText });
     });
 
     this.get('/signup', ['PUBLIC'], [], async (req, res) => {
