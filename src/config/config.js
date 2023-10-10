@@ -12,7 +12,7 @@ console.log(
 
 export default {
   DevMode: program.opts().dev,
-  PORT: program.opts().port,
+  PORT: process.env.PORT || 8080,
   MONGOURL: process.env.MongoURL,
   SECRET: process.env.SECRET,
   ADMIN_EMAIL: process.env.ADMIN_EMAIL,
