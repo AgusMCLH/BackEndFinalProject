@@ -1117,6 +1117,7 @@ body .ownermenu .modal_wrapper .modal_wrapper2 .modal_container .modal_body .mod
   margin-top: 10px;
 }
 body .ownermenu .modal_wrapper .modal_wrapper2 .modal_container .modal_body .modal_content form .UpdateProduct-form .formBody input {
+  border: 1px solid rgba(154, 154, 155, 0.4);
   height: 30px;
   color: rgb(105, 100, 103);
   background-color: #eae0b8;
@@ -1132,6 +1133,7 @@ body .ownermenu .modal_wrapper .modal_wrapper2 .modal_container .modal_body .mod
   width: 100%;
   margin: 20px 0px;
   display: flex;
+  gap: 10px;
 }
 body .ownermenu .modal_wrapper .modal_wrapper2 .modal_container .modal_body .modal_content form .UpdateProduct-form .formBody .divider .divider_column {
   width: 49%;
