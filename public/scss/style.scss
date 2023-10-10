@@ -1204,7 +1204,7 @@ body{
                                         input{
                                             border: 1px solid #9a9a9b66;;
                                             height: 30px;
-                                            color: rgb(105, 100, 103);;
+                                            color: #474245;
                                             background-color: #eae0b8;
                                             width: 100%;
                                             height: 25px;
@@ -1213,10 +1213,11 @@ body{
                                         }
                                         textArea{
                                             border: 1px solid #9a9a9b66;;
-                                            color: rgb(105, 100, 103);;
+                                            color: #474245;
                                             background-color: #eae0b8;
                                             border-radius: 4px;
                                             outline: none;
+                                            max-height: 200px;
                                         }
                                         .divider{
                                             width: 100%;
