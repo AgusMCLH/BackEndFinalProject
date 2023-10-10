@@ -1,0 +1,151 @@
+<div class="pageLabel_container">
+        <div class="pageLabel_wraper">
+            <h1>
+                User Profile
+            </h1>
+                <a href="/">Home</a><span>Profile</span>
+        </div>
+</div>
+
+<div class="profilePageWrap">
+    <div class="mainInfo_container">
+        <div class="avatarContainer">
+            <div class="avatarDiv">
+                {{#if AvatarURL}}
+                    <img src="{{AvatarURL}}" alt="{{user.firstName}}">
+                {{else}}
+                    <img src="/img/placeholder/avatar-placeholder.png" class="avatar" alt="avatar Placeholder" onclick="openAvatarModal()">
+                {{/if}}
+                <div class="hoverEffect" onclick="openAvatarModal()">
+                    <div class="innerDiv" onclick="openAvatarModal()">
+                        <img src="/img/icon/subir.png" class="innerDiv_Image" alt="Upload Image" onclick="openAvatarModal()">
+                        <p>Upload Image</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="userCredential_container">
+            <div class="credential userID"><h3>User ID:</h3><p>{{user._id}}</p></div>
+            <div class="credential"><h3>Name</h3><p>{{user.firstName}} {{user.lastName}}</p></div>
+            <div class="credential"><h3>Email</h3><p>{{user.email}}</p></div>
+            <div class="credential"><h3>Role</h3><p>{{user.role}}</p></div>
+        </div>
+    </div>
+
+    <div class="secondaryInfo_container">
+        <div class="documentStatusList">
+            <div class="documentStatusList_title">
+                <h2>My Documents</h2>
+            </div>
+            <div class="documentItem">
+                <div class="labelWraper">
+                    <div class="documentStatus {{#if documents.identification}}true{{else}}false{{/if}}"></div>
+                    <p>Cedula de Identidad</p>
+                </div> 
+                <p class="uploadButton" file="identification">Upload</p>
+            </div>
+            <div class="documentItem">
+                <div class="labelWraper">
+                    <div class="documentStatus {{#if documents.residence}}true{{else}}false{{/if}}"></div>
+                    <p>Constancia de domicilio</p>
+                </div> 
+                <p class="uploadButton" file="residence">Upload</p>
+            </div>
+            <div class="documentItem">
+                <div class="labelWraper">
+                    <div class="documentStatus {{#if documents.accStatus}}true{{else}}false{{/if}}"></div>
+                    <p>Comprobante de estado de cuenta</p>
+                </div> 
+                <p class="uploadButton" file="accStatus">Upload</p>
+            </div>
+        </div>
+        <div class="usersProductList">
+            <div class="usersProductList_title">
+                <h2>My Products</h2>
+                {{#if user.premium}}
+                    <a class="usersProductList_button" href="/ownermenu">Edit products</a>
+                {{else}}
+                    <a class="usersProductList_button" href="/users/premium/{{user._id}}">Go premium</a>
+                {{/if}}
+            </div>
+            {{#if userProductsBool}}
+                {{#each userProducts}}
+                    <div class="usersProductList_title_item">
+                        <p class="productItem_title">{{this.title}}</p> 
+                        <p class="productItem_visible">{{#if this.visible}}Visible{{else}}Invisible{{/if}}</p> 
+                        <p class="productItem_price">${{this.price}}</p>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="UserNullProducts">
+                    <h3>You don't have any product</h3>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="modalWrapper" id="modalWrapper">
+        <div class="Modal">
+            <div class="ModalTitle"><h3 id="ModalTitle">Upload identifications file</h3>
+            <img src="/img/icon/close.png" alt="Colse Icon" class="CloseIcon" onclick="closemodal()">
+            </div>
+            <img src="/img/illustrations/upload-file.svg" alt="Upload File illustration" class="ModalHero">
+            <div class="ModalContent">
+
+                <div class="InsideForm " id="IdentificationForm_div">
+                    <form action="" method="post" enctype="multipart/form-data" id="IdentificationForm" user="{{user._id}}">
+                            <label class="block text-sm font-medium dark:text-white FileLabel" for="default_size">Front image File</label>
+                        <input class="block text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400 CustomizedFileInput" id="IdFrontField" accept='.png' type="file">     
+                            <label class="block text-sm font-medium dark:text-white FileLabel" for="default_size">Back image File</label>
+                        <input class="block text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400 CustomizedFileInput" id="IdBackField" accept=".png" type="file">     
+                        <button type="submit" id="IdentificationSendButton"  class="SendDocumentButton">Enviar</button>
+                    </form>
+                </div>
+
+                <div class="InsideForm " id="ResidenceForm_div">
+                    <form action="" method="post" enctype="multipart/form-data" id="ResidenceForm" user="{{user._id}}">
+                    <label class="block text-sm font-medium dark:text-white FileLabel" for="default_size">Residence File</label>
+                        <input class="block text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400 CustomizedFileInput" id="ResidenceField" accept='.pdf' type="file">     
+                    <button type="submit" id="ResidenceSendButton" class="SendDocumentButton">Enviar</button>
+                    </form>
+                </div>
+
+                <div class="InsideForm " id="AccStatusForm_div">
+                    <form action="" method="post" enctype="multipart/form-data" id="AccStatusForm" user="{{user._id}}">
+                     <label class="block text-sm font-medium dark:text-white FileLabel" for="default_size">Account Status File</label>
+                        <input class="block text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400 CustomizedFileInput" id="AccStatusField" accept='.pdf' type="file">     
+                    <button type="submit" id="AccStatusSendButton" class="SendDocumentButton">Enviar</button>
+                    </form>
+                </div>
+
+                <div class="InsideForm" id="UserAvatarModal_div">
+                    <form action="" method="post" enctype="multipart/form-data" id="UserAvatarForm" user="{{user._id}}">
+                        <label class="block text-sm font-medium dark:text-white FileLabel" for="default_size">Avatar File</label>
+                        <input class="block text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400 CustomizedFileInput" id="UserAvatarField" accept='.png' type="file">     
+                        <button type="submit" id="UserAvatarSendButton" class="SendDocumentButton">Enviar</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    {{log user}}
+    {{log AvatarURL}}
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/documentsHandler.js"></script>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="https://sukgoc.stripocdn.email/content/guids/55c04a3a-1d94-445b-ace8-61926d632964/images/small_logo.png" type="image/x-icon">
+    <title>{{title}}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="secondNav">
+                <div class="secondNav_header">
+                    <div class="secondNav_message">
+                        <p>FREE SHIPPING ON ORDERS OVER $100</p>
+                    </div>
+                    <div class="secondNav_loginButtons">
+                        {{#if user}}
+                            <div>
+                                <a href="/users/logout">LOGOUT</a>
+                            </div>
+                            <div>
+                                <a href="/users/profile">PROFILE</a>
+                            </div>
+                        {{else}}
+                            <div>
+                                <a href="/users/signin">SIGN IN</a>
+                            </div>
+                            <div>
+                                <a href="/users/signup">SIGN UP</a>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="mainNav">
+                <div class="logoImage">
+                    <a href="/"><img src="https://themewagon.github.io/malefashion/img/logo.png" alt="LOGO"></a>
+                </div>
+                <div class="navRoutes">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/api/products">Products</a></li>
+                        <li><a href="/api/chat">Chat</a></li>
+                        {{#if user}}
+                            <li><a href="/users/premium/{{user._id}}">{{#if user.premium}}Exit Premium{{else}}Enter Premium{{/if}}</a></li>
+                            {{#if user.premium}}
+                                <li><a href="/ownermenu">Owner Menu</a></li>
+                            {{/if}}
+                        {{/if}}
+                    </ul>
+                </div>
+                <div class="userIcons">
+                    <a href="#" id="heartIcon" class="userIcons_Icon"></a>
+                    <a href="#" id="searchIcon" class="userIcons_Icon"></a>
+                    {{#if user}}
+                    <a href="/api/carts/{{user.cartId}}" id="cartIcon" class="userIcons_Icon"></a>
+                    {{else}}
+                    <a href="/users/signin"  id="cartIcon" class="userIcons_Icon"></a>
+                    {{/if}}
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    {{{body}}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/productRating.js"></script>
+    <script src="/js/index.js"></script>
+
+</body>
+</html>
