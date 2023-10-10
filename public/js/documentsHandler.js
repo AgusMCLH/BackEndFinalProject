@@ -104,6 +104,17 @@ async function PostFiles(files, userId) {
     body: formData,
   });
   const data = await response.json();
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: data.message,
+    showConfirmButton: false,
+    timer: 1500,
+  }).then(
+    setTimeout(() => {
+      location.reload();
+    }, 1000)
+  );
   return data;
 }
 
