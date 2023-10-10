@@ -6,7 +6,7 @@ import { notFoundPage } from './router/404.router.js';
 import SessionRouter from './router/session.router.js';
 import ProductsRouter from './router/products.Router.js';
 import CartRouting from './router/carts.Router.js';
-import UserRouter from './router/users.Router.js';
+import UserRouter from './router/users.router.js';
 import ChatRouter from './router/chat.Router.js';
 import HomeRouter from './router/home.Router.js';
 import MockingRouter from './router/moking.Router.js';
