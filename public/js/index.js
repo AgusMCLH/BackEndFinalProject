@@ -3,15 +3,13 @@ let images = document.getElementsByTagName('img');
 console.log(images);
 
 if (images !== undefined) {
-  let src = '';
+  let _src = '/img/placeholder/placeholder-image.webp';
   if (window.location.href.split('/')[4] === 'profile') {
-    src = '/img/placeholder/avatar-placeholder.png';
-  } else {
-    src = '/img/placeholder/placeholder-image.webp';
+    _src = '/img/placeholder/avatar-placeholder.png';
   }
   for (let j = 0; j < images.length; j++) {
-    images[j].addEventListener('error', () => {
-      images[j].src = src;
-    });
+    images[j].onerror = function () {
+      this.src = _src;
+    };
   }
 }
