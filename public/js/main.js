@@ -27,6 +27,9 @@ socket.on('ShowMessages', (messages) => {
 });
 
 const renderMessages = (messages) => {
+  let hour = new Date().getHours();
+  let minutes = new Date().getMinutes();
+  // format:
   let html = messages
     .map((message) => {
       let messageType = 'rcvd';
@@ -36,7 +39,7 @@ const renderMessages = (messages) => {
       }
       console.log(messageType);
       return `
-      <div data-time="${message.user} 16:40" class="msg ${messageType}">${message.message}</div>`;
+      <div data-time="${message.user} ${hour}:${minutes}" class="msg ${messageType}">${message.message}</div>`;
     })
     .join(' ');
   document.getElementById('chat-history').innerHTML = html;

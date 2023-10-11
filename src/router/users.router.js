@@ -265,7 +265,9 @@ export default class UserRouter extends CustomRouter {
         console.log(messagge);
         res.render('premiumswitch', { title: 'Premium', messagge, user });
       } else {
-        res.send('Usted no tiene todos los documentos necesarios');
+        res.send(
+          '<p>Usted no tiene todos los documentos necesarios</p><a href="/users/profile">Puede agregarlos aqui!</a>'
+        );
       }
     });
   }
