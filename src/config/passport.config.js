@@ -17,10 +17,11 @@ const initializePassport = async () => {
       { usernameField: 'email', passReqToCallback: true },
 
       async (req, username, password, done) => {
+        logger.debug(`Registering user ${username} with password ${password}`);
         const { firstName, lastName } = req.body;
         try {
           const userValidation = await userService.getUserByEmail(username);
-
+          logger.debug(`User validation: ${userValidation}`);
           if (userValidation) {
             return done(null, false, {
               message: 'Email already in use',
@@ -33,7 +34,9 @@ const initializePassport = async () => {
             password,
           };
           userData.cartId = (await cartService.addCart()).cartId;
+          logger.debug(`User data: ${JSON.stringify(userData)}`);
           const newUser = await userService.addUser(userData);
+          logger.debug(`New user: ${JSON.stringify(newUser)}`);
 
           if (newUser.hasOwnProperty('code')) {
             if (newUser.code === 400) {

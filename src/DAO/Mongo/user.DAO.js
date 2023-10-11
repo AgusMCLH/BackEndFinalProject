@@ -1,7 +1,7 @@
 import { userModel } from '../../models/users.model.js';
 import { logger } from './../../middleware/logger.middleware.js';
 
-import userDTO from '../../DTOs/user.DTO.js';
+import CreateUserDTO from '../../DTOs/createUser.DTO.js';
 
 class UserDAO {
   constructor() {
@@ -26,7 +26,11 @@ class UserDAO {
 
   async getUserByEmail(email) {
     try {
-      return await this.model.findOne({ email: email });
+      let user = await this.model.findOne({ email: email });
+      if (user === null) {
+        user = false;
+      }
+      return user;
     } catch (error) {
       logger.error(error);
     }
@@ -34,7 +38,7 @@ class UserDAO {
 
   async addUser(user) {
     try {
-      user = new userDTO(user);
+      user = new CreateUserDTO(user);
       return await this.model.create(user);
     } catch (error) {
       logger.error(error);
