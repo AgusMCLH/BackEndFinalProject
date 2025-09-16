@@ -13,18 +13,20 @@ if (process.env.NODE_ENV === "production") {
 
 const logger = winston.createLogger({
   level: "info",
-  format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
   transports,
 });
 
 export { logger };
+
 export const loggerMiddleware = (req, res, next) => {
   req.logger = logger;
-  if (req.method !== 'GET') {
-    logger.html(
-      `${req.method} - ${req.url} - [${
-        req.ip
-      }] -  ${new Date().toLocaleString()}`
+  if (req.method !== "GET") {
+    logger.info(
+      `${req.method} - ${req.url} - [${req.ip}] - ${new Date().toLocaleString()}`
     );
   }
   next();
