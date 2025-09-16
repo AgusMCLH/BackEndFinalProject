@@ -17,4 +17,15 @@ const logger = winston.createLogger({
   transports,
 });
 
-export default logger;
+export { logger };
+export const loggerMiddleware = (req, res, next) => {
+  req.logger = logger;
+  if (req.method !== 'GET') {
+    logger.html(
+      `${req.method} - ${req.url} - [${
+        req.ip
+      }] -  ${new Date().toLocaleString()}`
+    );
+  }
+  next();
+};
