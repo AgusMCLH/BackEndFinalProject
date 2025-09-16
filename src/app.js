@@ -21,20 +21,17 @@ import mongoStore from 'connect-mongo';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 import compression from 'express-compression';
-import { Server } from 'socket.io';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
 import { logger } from './middleware/logger.middleware.js';
 import errorManagerMiddleware from './middleware/errorManager.middleware.js';
+
 let messages = [];
 
-// Declaro una app de tipo express y la configuro para que use JSON's y urlencoded ademas de usar la carpeta public para los archivos estaticos
 const app = express();
+
 app.use(
   compression({
-    brotli: {
-      enabled: true,
-      zlib: {},
-    },
+    brotli: { enabled: true, zlib: {} },
   })
 );
 app.use(loggerMiddleware);
@@ -42,15 +39,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// Configuro handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', './views');
 app.set('view engine', 'handlebars');
 
-// Configuro las cookies
 app.use(cookieParser(config.SECRET));
-
-// Configuro la session
 app.use(
   session({
     store: mongoStore.create({
@@ -64,27 +57,20 @@ app.use(
   })
 );
 
-//Passport
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Swagger
 const swaggerOptions = {
   definition: {
     openapi: '3.0.1',
-    info: {
-      title: 'Delilah Resto',
-      version: '0.7.3',
-      description: 'Delilah Resto API Information',
-    },
+    info: { title: 'Delilah Resto', version: '0.7.3', description: 'Delilah Resto API Information' },
   },
   apis: ['./docs/**/*.yaml'],
 };
 const specs = swaggerJsDoc(swaggerOptions);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Rutas
 app.use('/', new HomeRouter().getRouter());
 app.use('/api/test', testRouter);
 app.use('/api/products', new ProductsRouter().getRouter());
@@ -98,24 +84,7 @@ app.use('/loggerTest', new LoggerRouter().getRouter());
 app.use('/ownermenu', new OwnerMenuRouter().getRouter());
 app.use('*', notFoundPage);
 
-// Configuro el puerto en el cual va a escuchar el servidor
-const webServer = app.listen(config.PORT, () => {
-  logger.info(`Server started on port ${config.PORT} `);
-});
-
-// Configuro socket.io
-const io = new Server(webServer);
-
-io.on('connection', (socket) => {
-  io.emit('ShowMessages', messages);
-  socket.on('NewMessage', (message) => {
-    logger.info(message);
-    // Agrego el mensaje al array de mensajes
-    messages.push(message);
-    // Propago el evento a todos los clientes conectados
-    io.emit('ShowMessages', messages);
-  });
-});
-export { io };
-
 app.use(errorManagerMiddleware);
+
+// 👇 Export default para Vercel
+export default app;
